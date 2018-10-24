@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title Page</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.3/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center"><span class="glyphicon glyphicon-fire"></span> Hot Restaurant</h1>
+            <hr>
+            <h2 class="text-center">Current Reservations and Waiting List</h2>
+            <br>
+
+            <div class="text-center">
+                <a href="/reserve"><button type="button" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-credit-card"></span>
+                        Make Reservation</button></a>
+                <a href="/"><button type="button" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-home"></span></button></a>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Numer</th>
+                        <th>Email</th>
+                        <th>ID</th>
+                    </tr>
+                </thead>
+                <tbody id="reso">
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Numer</th>
+                        <th>Email</th>
+                        <th>ID</th>
+                    </tr>
+                </thead>
+                <tbody id="wait-list">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+<script>
+
+$(document).on("ready", () => {
+    $.ajax({url: "/api/tables", success: function(result){
+        result.forEach(item => {
+            $("#reso").append(
+            `<tr>
+                <td>${item.customerName}</td>
+                <td>${item.phoneNumber}</td>
+                <td>${item.customerEmail}</td>
+                <td>${item.customerID}</td>
+            </tr>`
+            )
+        });
+    }});
+    $.ajax({url: "/api/waitlist", success: function(result){
+        result.forEach(item => {
+            $("#wait-list").append(
+            `<tr>
+                <td>${item.customerName}</td>
+                <td>${item.phoneNumber}</td>
+                <td>${item.customerEmail}</td>
+                <td>${item.customerID}</td>
+            </tr>`
+            )
+        });
+    }});
+});
+
+</script>
+<script src="../public/js/app.js"></script>
+</html>
